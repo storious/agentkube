@@ -1,0 +1,43 @@
+{
+  "format": "agulater/package/v2",
+  "id": "agentkube",
+  "version": "0.2.3-rc.1",
+  "description": "Optional specialists, skills, plugins, starters, and catalog entries for Agul.",
+  "instructions": "AGENTS.md",
+  "resources": {
+    "skills": [
+      {
+        "id": "grill-me",
+        "path": "skills/grill-me"
+      },
+      {
+        "id": "grilling",
+        "path": "skills/grilling"
+      }
+    ],
+    "plugins": [
+      {
+        "id": "coordinator",
+        "path": "../plugins/coordinator"
+      },
+      {
+        "id": "web-search",
+        "path": "../plugins/web-search"
+      }
+    ],
+    "packages": [
+      {
+        "path": "../agents/repository-scout/.agents"
+      },
+      {
+        "path": "../agents/docs-editor/.agents"
+      },
+      {
+        "path": "../agents/short-patcher/.agents"
+      },
+      {
+        "path": "../agents/focused-tester/.agents"
+      }
+    ]
+  }
+}

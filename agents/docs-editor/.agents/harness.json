@@ -1,0 +1,33 @@
+{
+  "format": "agulater/harness/v1",
+  "task_template": "Make the requested bounded documentation change. Validate claims against source and report the exact files changed.",
+  "requirements": {
+    "min_context_window": 16384,
+    "capabilities": [
+      "read",
+      "write",
+      "edit",
+      "shell"
+    ]
+  },
+  "defaults": {
+    "reasoning_effort": "medium",
+    "max_rounds": 6,
+    "max_tool_calls": 12,
+    "max_tokens": 2048,
+    "timeout_seconds": 900
+  },
+  "result": {
+    "format": "agul/handoff/v1",
+    "summary_max_chars": 240,
+    "evidence_max_items": 4
+  },
+  "completion": {
+    "verification": "when_changed",
+    "rules": [
+      "Only documentation and directly related indexes are changed.",
+      "Technical claims are checked against current source.",
+      "Changed paths and verification are included in the handoff."
+    ]
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "format": "agulater/catalog/v1",
+  "entries": [
+    {
+      "id": "repository-scout",
+      "kind": "package",
+      "description": "Read-only repository exploration with path-backed findings.",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": "agents/repository-scout/.agents",
+            "ref": "repository-scout-v0.1.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "docs-editor",
+      "kind": "package",
+      "description": "Bounded documentation changes with source-backed verification.",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": "agents/docs-editor/.agents",
+            "ref": "docs-editor-v0.1.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "short-patcher",
+      "kind": "package",
+      "description": "Small source patches with focused verification.",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": "agents/short-patcher/.agents",
+            "ref": "short-patcher-v0.1.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "focused-tester",
+      "kind": "package",
+      "description": "Focused test execution and failure diagnosis without source edits.",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": "agents/focused-tester/.agents",
+            "ref": "focused-tester-v0.1.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "grill-me",
+      "kind": "skill",
+      "description": "Relentlessly stress-test a plan, decision, or idea.",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": ".agents/skills/grill-me",
+            "ref": "grill-me-v0.1.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "grilling",
+      "kind": "skill",
+      "description": "Relentlessly stress-test a plan, decision, or idea.",
+      "versions": [
+        {
+          "version": "0.1.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": ".agents/skills/grilling",
+            "ref": "grilling-v0.1.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "coordinator",
+      "kind": "plugin",
+      "description": "Delegate bounded work to prepared Agul specialists through native or Codex execution pools.",
+      "versions": [
+        {
+          "version": "0.3.2-rc.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": "plugins/coordinator",
+            "ref": "coordinator-v0.3.2-rc.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "web-search",
+      "kind": "plugin",
+      "description": "Structured web search, page opening, and in-page find through SearXNG or Tavily.",
+      "versions": [
+        {
+          "version": "0.3.0",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/storious/agentkube.git",
+            "subdir": "plugins/web-search",
+            "ref": "web-search-v0.3.0"
+          }
+        }
+      ]
+    }
+  ]
+}

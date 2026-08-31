@@ -1,0 +1,29 @@
+{
+  "format": "agulater/package/v2",
+  "id": "repository-scout",
+  "version": "0.1.1",
+  "description": "Read-only repository exploration with concise, path-backed findings.",
+  "instructions": "AGENTS.md",
+  "resources": {
+    "contexts": [
+      {
+        "id": "repository-scout-context",
+        "description": "Boundaries and reporting conventions for repository reconnaissance.",
+        "path": "context.md",
+        "load": "eager"
+      }
+    ]
+  },
+  "profile": {
+    "accepts": [
+      "repository-search",
+      "implementation-trace",
+      "read-only-audit"
+    ],
+    "workspace_effect": "read",
+    "contexts": [
+      "repository-scout-context"
+    ],
+    "harness": "harness.json"
+  }
+}

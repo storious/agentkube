@@ -1,0 +1,30 @@
+{
+  "format": "agulater/package/v2",
+  "id": "docs-editor",
+  "version": "0.1.1",
+  "description": "Small, evidence-backed documentation edits with focused verification.",
+  "instructions": "AGENTS.md",
+  "resources": {
+    "contexts": [
+      {
+        "id": "docs-editor-context",
+        "description": "Documentation editing boundaries and handoff requirements.",
+        "path": "context.md",
+        "load": "eager"
+      }
+    ]
+  },
+  "profile": {
+    "accepts": [
+      "documentation",
+      "docs-only",
+      "docs-fix",
+      "release-notes"
+    ],
+    "workspace_effect": "write",
+    "contexts": [
+      "docs-editor-context"
+    ],
+    "harness": "harness.json"
+  }
+}

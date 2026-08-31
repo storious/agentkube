@@ -1,0 +1,122 @@
+{
+  "format": "agulater/specialists/v1",
+  "specialists": [
+    {
+      "id": "docs-editor",
+      "version": "0.1.1",
+      "description": "Small, evidence-backed documentation edits with focused verification.",
+      "accepts": [
+        "documentation",
+        "docs-only",
+        "docs-fix",
+        "release-notes"
+      ],
+      "workspace_effect": "write",
+      "launch_path": "specialists/docs-editor/launch.json",
+      "snapshot_path": "specialists/docs-editor/snapshot.json",
+      "requirements": {
+        "min_context_window": 16384,
+        "capabilities": [
+          "read",
+          "write",
+          "edit",
+          "shell"
+        ]
+      },
+      "defaults": {
+        "reasoning_effort": "medium",
+        "max_rounds": 6,
+        "max_tool_calls": 12,
+        "max_tokens": 2048,
+        "timeout_seconds": 900
+      },
+      "handoff_format": "agul/handoff/v1"
+    },
+    {
+      "id": "focused-tester",
+      "version": "0.1.1",
+      "description": "Focused test execution and failure diagnosis without source edits.",
+      "accepts": [
+        "focused-test",
+        "verification",
+        "failure-diagnosis"
+      ],
+      "workspace_effect": "write",
+      "launch_path": "specialists/focused-tester/launch.json",
+      "snapshot_path": "specialists/focused-tester/snapshot.json",
+      "requirements": {
+        "min_context_window": 16384,
+        "capabilities": [
+          "read",
+          "shell"
+        ]
+      },
+      "defaults": {
+        "reasoning_effort": "medium",
+        "max_rounds": 8,
+        "max_tool_calls": 12,
+        "max_tokens": 2048,
+        "timeout_seconds": 1200
+      },
+      "handoff_format": "agul/handoff/v1"
+    },
+    {
+      "id": "repository-scout",
+      "version": "0.1.1",
+      "description": "Read-only repository exploration with concise, path-backed findings.",
+      "accepts": [
+        "repository-search",
+        "implementation-trace",
+        "read-only-audit"
+      ],
+      "workspace_effect": "read",
+      "launch_path": "specialists/repository-scout/launch.json",
+      "snapshot_path": "specialists/repository-scout/snapshot.json",
+      "requirements": {
+        "min_context_window": 16384,
+        "capabilities": [
+          "read",
+          "shell"
+        ]
+      },
+      "defaults": {
+        "reasoning_effort": "medium",
+        "max_rounds": 6,
+        "max_tool_calls": 8,
+        "max_tokens": 1536,
+        "timeout_seconds": 600
+      },
+      "handoff_format": "agul/handoff/v1"
+    },
+    {
+      "id": "short-patcher",
+      "version": "0.1.1",
+      "description": "A bounded source patch with focused tests and explicit handoff evidence.",
+      "accepts": [
+        "small-patch",
+        "focused-fix",
+        "local-refactor"
+      ],
+      "workspace_effect": "write",
+      "launch_path": "specialists/short-patcher/launch.json",
+      "snapshot_path": "specialists/short-patcher/snapshot.json",
+      "requirements": {
+        "min_context_window": 32768,
+        "capabilities": [
+          "read",
+          "write",
+          "edit",
+          "shell"
+        ]
+      },
+      "defaults": {
+        "reasoning_effort": "high",
+        "max_rounds": 8,
+        "max_tool_calls": 16,
+        "max_tokens": 3072,
+        "timeout_seconds": 1200
+      },
+      "handoff_format": "agul/handoff/v1"
+    }
+  ]
+}

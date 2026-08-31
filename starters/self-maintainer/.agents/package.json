@@ -1,0 +1,33 @@
+{
+  "format": "agulater/package/v2",
+  "id": "self-maintainer",
+  "version": "0.3.2-rc.1",
+  "description": "A small master setup with native or ChatGPT-backed specialists and live web research.",
+  "instructions": "AGENTS.md",
+  "resources": {
+    "plugins": [
+      {
+        "id": "coordinator",
+        "path": "../../../plugins/coordinator"
+      },
+      {
+        "id": "web-search",
+        "path": "../../../plugins/web-search"
+      }
+    ],
+    "packages": [
+      {
+        "path": "../../../agents/repository-scout/.agents"
+      },
+      {
+        "path": "../../../agents/focused-tester/.agents"
+      },
+      {
+        "path": "../../../agents/docs-editor/.agents"
+      },
+      {
+        "path": "../../../agents/short-patcher/.agents"
+      }
+    ]
+  }
+}

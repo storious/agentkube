@@ -1,0 +1,91 @@
+{
+  "format": "agulater/pools/v2",
+  "default_pool": "deepseek",
+  "pools": [
+    {
+      "id": "deepseek",
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 600,
+      "description": "DeepSeek API worker; requires DEEPSEEK_API_KEY.",
+      "labels": [
+        "remote",
+        "general"
+      ],
+      "reasoning_effort": "high",
+      "engine": "native",
+      "provider": "deepseek",
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "model": "deepseek-v4-flash",
+      "context_window": 1000000,
+      "api_key_env": "DEEPSEEK_API_KEY"
+    },
+    {
+      "id": "glm-coding",
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 600,
+      "description": "GLM Coding Plan worker; requires GLM_API_KEY.",
+      "labels": [
+        "subscription",
+        "general"
+      ],
+      "reasoning_effort": "high",
+      "engine": "native",
+      "provider": "glm",
+      "endpoint": "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+      "model": "glm-4.7",
+      "context_window": 200000,
+      "api_key_env": "GLM_API_KEY"
+    },
+    {
+      "id": "codex-account",
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 900,
+      "description": "ChatGPT account-backed worker through the host Codex runtime.",
+      "labels": [
+        "account",
+        "general"
+      ],
+      "engine": "codex"
+    },
+    {
+      "id": "local-example",
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 600,
+      "description": "Template for a local OpenAI-compatible worker; edit endpoint and model before selecting it.",
+      "labels": [
+        "local",
+        "bounded"
+      ],
+      "reasoning_effort": "medium",
+      "engine": "native",
+      "provider": "openai-compatible",
+      "endpoint": "http://127.0.0.1:51100/v1/chat/completions",
+      "model": "local-model",
+      "context_window": 32768
+    }
+  ]
+}

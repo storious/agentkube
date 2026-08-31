@@ -1,0 +1,5 @@
+{
+  "format": "agul/launch/v2",
+  "instructions": "instructions.md",
+  "plugins": "resources/plugins"
+}

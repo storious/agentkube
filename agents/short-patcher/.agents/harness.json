@@ -1,0 +1,33 @@
+{
+  "format": "agulater/harness/v1",
+  "task_template": "Implement the requested small patch within the supplied paths. Preserve unrelated work and verify the changed behavior.",
+  "requirements": {
+    "min_context_window": 32768,
+    "capabilities": [
+      "read",
+      "write",
+      "edit",
+      "shell"
+    ]
+  },
+  "defaults": {
+    "reasoning_effort": "high",
+    "max_rounds": 8,
+    "max_tool_calls": 16,
+    "max_tokens": 3072,
+    "timeout_seconds": 1200
+  },
+  "result": {
+    "format": "agul/handoff/v1",
+    "summary_max_chars": 240,
+    "evidence_max_items": 4
+  },
+  "completion": {
+    "verification": "when_changed",
+    "rules": [
+      "The patch stays within the requested scope.",
+      "Relevant verification is run after changes.",
+      "Changed paths, checks, and remaining risks are reported."
+    ]
+  }
+}

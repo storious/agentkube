@@ -1,0 +1,31 @@
+{
+  "format": "agulater/harness/v1",
+  "task_template": "Run the narrowest existing verification for the task. Do not edit source; report reproducible results and a focused diagnosis.",
+  "requirements": {
+    "min_context_window": 16384,
+    "capabilities": [
+      "read",
+      "shell"
+    ]
+  },
+  "defaults": {
+    "reasoning_effort": "medium",
+    "max_rounds": 8,
+    "max_tool_calls": 12,
+    "max_tokens": 2048,
+    "timeout_seconds": 1200
+  },
+  "result": {
+    "format": "agul/handoff/v1",
+    "summary_max_chars": 240,
+    "evidence_max_items": 4
+  },
+  "completion": {
+    "verification": "required",
+    "rules": [
+      "At least one task-relevant check is attempted.",
+      "Tracked source files remain unchanged.",
+      "Commands, outcomes, and blockers are reported."
+    ]
+  }
+}

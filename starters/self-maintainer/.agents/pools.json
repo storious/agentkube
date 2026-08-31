@@ -1,0 +1,91 @@
+{
+  "format": "agulater/pools/v2",
+  "default_pool": "deepseek",
+  "pools": [
+    {
+      "id": "deepseek",
+      "engine": "native",
+      "description": "DeepSeek API worker; requires DEEPSEEK_API_KEY.",
+      "labels": [
+        "remote",
+        "general"
+      ],
+      "provider": "deepseek",
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "model": "deepseek-v4-flash",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "reasoning_effort": "high",
+      "context_window": 1000000,
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 600
+    },
+    {
+      "id": "glm-coding",
+      "engine": "native",
+      "description": "GLM Coding Plan worker; requires GLM_API_KEY.",
+      "labels": [
+        "subscription",
+        "general"
+      ],
+      "provider": "glm",
+      "endpoint": "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+      "model": "glm-4.7",
+      "api_key_env": "GLM_API_KEY",
+      "reasoning_effort": "high",
+      "context_window": 200000,
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 600
+    },
+    {
+      "id": "codex-account",
+      "engine": "codex",
+      "description": "ChatGPT account-backed worker through the host Codex runtime.",
+      "labels": [
+        "account",
+        "general"
+      ],
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 900
+    },
+    {
+      "id": "local-example",
+      "engine": "native",
+      "description": "Template for a local OpenAI-compatible worker; edit endpoint and model before selecting it.",
+      "labels": [
+        "local",
+        "bounded"
+      ],
+      "provider": "openai-compatible",
+      "endpoint": "http://127.0.0.1:51100/v1/chat/completions",
+      "model": "local-model",
+      "reasoning_effort": "medium",
+      "context_window": 32768,
+      "capabilities": [
+        "read",
+        "write",
+        "edit",
+        "shell"
+      ],
+      "max_concurrency": 1,
+      "request_timeout_seconds": 600
+    }
+  ]
+}

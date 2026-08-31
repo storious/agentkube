@@ -1,0 +1,10 @@
+[project]
+name = "agentkube-workspace"
+version = "0.1.0"
+description = "Tests for the AgentKube extension collection"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[tool.uv]
+package = false

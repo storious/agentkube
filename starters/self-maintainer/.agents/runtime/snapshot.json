@@ -1,0 +1,86 @@
+{
+  "format": "agulater/snapshot/v1",
+  "package": {
+    "id": "self-maintainer",
+    "version": "0.3.2-rc.1"
+  },
+  "instructions": {
+    "source": "AGENTS.md",
+    "path": "instructions.md"
+  },
+  "resources": {
+    "skills": [],
+    "plugins": [
+      {
+        "id": "coordinator",
+        "version": "0.3.2-rc.1",
+        "source": {
+          "type": "resource",
+          "path": "../../../plugins/coordinator"
+        },
+        "path": "resources/plugins/coordinator"
+      },
+      {
+        "id": "web-search",
+        "version": "0.3.0",
+        "source": {
+          "type": "resource",
+          "path": "../../../plugins/web-search"
+        },
+        "path": "resources/plugins/web-search"
+      }
+    ],
+    "contexts": [],
+    "packages": [
+      {
+        "id": "repository-scout",
+        "version": "0.1.1",
+        "source": {
+          "type": "resource",
+          "path": "../../../agents/repository-scout/.agents"
+        },
+        "path": "specialists/repository-scout",
+        "launch_path": "specialists/repository-scout/launch.json",
+        "snapshot_path": "specialists/repository-scout/snapshot.json"
+      },
+      {
+        "id": "focused-tester",
+        "version": "0.1.1",
+        "source": {
+          "type": "resource",
+          "path": "../../../agents/focused-tester/.agents"
+        },
+        "path": "specialists/focused-tester",
+        "launch_path": "specialists/focused-tester/launch.json",
+        "snapshot_path": "specialists/focused-tester/snapshot.json"
+      },
+      {
+        "id": "docs-editor",
+        "version": "0.1.1",
+        "source": {
+          "type": "resource",
+          "path": "../../../agents/docs-editor/.agents"
+        },
+        "path": "specialists/docs-editor",
+        "launch_path": "specialists/docs-editor/launch.json",
+        "snapshot_path": "specialists/docs-editor/snapshot.json"
+      },
+      {
+        "id": "short-patcher",
+        "version": "0.1.1",
+        "source": {
+          "type": "resource",
+          "path": "../../../agents/short-patcher/.agents"
+        },
+        "path": "specialists/short-patcher",
+        "launch_path": "specialists/short-patcher/launch.json",
+        "snapshot_path": "specialists/short-patcher/snapshot.json"
+      }
+    ]
+  },
+  "dependencies": {
+    "skills": [],
+    "plugins": [],
+    "packages": []
+  }
+}

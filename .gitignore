@@ -1,0 +1,10 @@
+__pycache__/
+*.py[oc]
+.venv/
+.uv-cache/
+.tmp/
+.agents/runtime/
+agulater/
+agul/
+/workspace/
+tmp.txt

@@ -1,0 +1,77 @@
+{
+  "format": "agul/plugin/v2",
+  "name": "coordinator",
+  "version": "0.3.2-rc.1",
+  "timeout_seconds": 6300,
+  "command": [
+    "python",
+    "coordinator.py"
+  ],
+  "commands": [
+    {
+      "name": "agent",
+      "description": "Run one prepared specialist: /agent <specialist> <task>"
+    }
+  ],
+  "tools": [
+    {
+      "name": "delegate_tasks",
+      "description": "Delegate one to five bounded tasks to prepared specialists. Set specialist to a role ID. Normally omit pool so the coordinator uses pools.default_pool; set pool only to override it with an execution-pool ID. Read work runs concurrently and write work serially.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "type": "array",
+            "description": "Bounded tasks assigned to prepared specialist roles. No registry lookup is needed for the usual case: omit pool to use pools.default_pool.",
+            "minItems": 1,
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "specialist": {
+                  "type": "string",
+                  "description": "Required prepared specialist role ID, for example repository-scout. This is not a pool ID.",
+                  "minLength": 1
+                },
+                "pool": {
+                  "type": "string",
+                  "description": "Optional execution-pool ID from pools.json. Omit this field to use pools.default_pool; an accidentally blank value also uses that default. Do not copy the specialist ID here."
+                },
+                "task": {
+                  "type": "string",
+                  "description": "The bounded work for the selected specialist to complete.",
+                  "minLength": 1
+                },
+                "context": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "specialist",
+                "task"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "tasks"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

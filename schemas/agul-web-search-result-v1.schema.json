@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentkube.dev/schemas/agul-web-search-result-v1.schema.json",
+  "title": "Agul web search result v1 payload",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/search"
+    },
+    {
+      "$ref": "#/$defs/openPage"
+    },
+    {
+      "$ref": "#/$defs/findInPage"
+    }
+  ],
+  "$defs": {
+    "pageMetadata": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content_type": {
+          "type": "string"
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "url",
+        "title",
+        "content_type",
+        "truncated"
+      ],
+      "additionalProperties": false
+    },
+    "search": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "agul/web-search-result/v1"
+        },
+        "stage": {
+          "const": "search"
+        },
+        "provider": {
+          "enum": [
+            "searxng",
+            "tavily"
+          ]
+        },
+        "query": {
+          "type": "string"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "snippet": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "url",
+              "snippet"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "format",
+        "stage",
+        "provider",
+        "query",
+        "results"
+      ],
+      "additionalProperties": false
+    },
+    "openPage": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "agul/web-search-result/v1"
+        },
+        "stage": {
+          "const": "open_page"
+        },
+        "page": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "content_type": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "truncated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "url",
+            "title",
+            "content_type",
+            "text",
+            "truncated"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "format",
+        "stage",
+        "page"
+      ],
+      "additionalProperties": false
+    },
+    "findInPage": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "agul/web-search-result/v1"
+        },
+        "stage": {
+          "const": "find_in_page"
+        },
+        "page": {
+          "$ref": "#/$defs/pageMetadata"
+        },
+        "query": {
+          "type": "string"
+        },
+        "match_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "excerpt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "offset",
+              "excerpt"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "format",
+        "stage",
+        "page",
+        "query",
+        "match_count",
+        "matches"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

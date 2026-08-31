@@ -1,0 +1,62 @@
+{
+  "format": "agul/plugin/v2",
+  "name": "web-search",
+  "version": "0.3.0",
+  "command": [
+    "python",
+    "web_search.py"
+  ],
+  "tools": [
+    {
+      "name": "web_search",
+      "description": "Search the web and return structured titles, URLs, and snippets for pages that can be opened with web_open.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query.",
+            "minLength": 1,
+            "maxLength": 399
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "Maximum number of results to return.",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 5
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "web_open",
+      "description": "Open a search result or web page as readable text; optionally find text and return focused excerpts.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The HTTP or HTTPS page URL to open.",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "find": {
+            "type": "string",
+            "description": "Optional text to find in the opened page.",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

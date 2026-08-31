@@ -1,0 +1,29 @@
+{
+  "format": "agulater/package/v2",
+  "id": "focused-tester",
+  "version": "0.1.1",
+  "description": "Focused test execution and failure diagnosis without source edits.",
+  "instructions": "AGENTS.md",
+  "resources": {
+    "contexts": [
+      {
+        "id": "focused-tester-context",
+        "description": "Bounded verification, diagnosis, and reporting conventions.",
+        "path": "context.md",
+        "load": "eager"
+      }
+    ]
+  },
+  "profile": {
+    "accepts": [
+      "focused-test",
+      "verification",
+      "failure-diagnosis"
+    ],
+    "workspace_effect": "write",
+    "contexts": [
+      "focused-tester-context"
+    ],
+    "harness": "harness.json"
+  }
+}

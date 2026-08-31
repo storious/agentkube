@@ -1,0 +1,31 @@
+{
+  "format": "agulater/harness/v1",
+  "task_template": "Inspect the requested repository behavior. Stay read-only, use the supplied context and paths, and return exact evidence.",
+  "requirements": {
+    "min_context_window": 16384,
+    "capabilities": [
+      "read",
+      "shell"
+    ]
+  },
+  "defaults": {
+    "reasoning_effort": "medium",
+    "max_rounds": 6,
+    "max_tool_calls": 8,
+    "max_tokens": 1536,
+    "timeout_seconds": 600
+  },
+  "result": {
+    "format": "agul/handoff/v1",
+    "summary_max_chars": 240,
+    "evidence_max_items": 4
+  },
+  "completion": {
+    "verification": "required",
+    "rules": [
+      "No workspace files are changed.",
+      "Every material conclusion cites repository evidence.",
+      "Unknowns and inferred claims are labeled."
+    ]
+  }
+}

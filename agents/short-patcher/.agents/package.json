@@ -1,0 +1,29 @@
+{
+  "format": "agulater/package/v2",
+  "id": "short-patcher",
+  "version": "0.1.1",
+  "description": "A bounded source patch with focused tests and explicit handoff evidence.",
+  "instructions": "AGENTS.md",
+  "resources": {
+    "contexts": [
+      {
+        "id": "short-patcher-context",
+        "description": "Small-patch boundaries, safety rules, and reporting format.",
+        "path": "context.md",
+        "load": "eager"
+      }
+    ]
+  },
+  "profile": {
+    "accepts": [
+      "small-patch",
+      "focused-fix",
+      "local-refactor"
+    ],
+    "workspace_effect": "write",
+    "contexts": [
+      "short-patcher-context"
+    ],
+    "harness": "harness.json"
+  }
+}
