@@ -39,13 +39,13 @@ updates. The first experience release is a prerelease, so use its pinned URL:
 Linux or macOS:
 
 ```console
-curl -fsSL https://github.com/storious/agulater/releases/download/v0.2.1-rc.1/install.sh | sh
+curl -fsSL https://github.com/storious/agulater/releases/download/v0.2.1-rc.2/install.sh | sh
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm https://github.com/storious/agulater/releases/download/v0.2.1-rc.1/install.ps1 | iex
+irm https://github.com/storious/agulater/releases/download/v0.2.1-rc.2/install.ps1 | iex
 ```
 
 The installer downloads a self-contained Agulater executable and creates a

@@ -5,7 +5,7 @@ This batch is deliberately split across three independently versioned projects:
 | Project | Candidate | Role |
 | --- | --- | --- |
 | Agul | 0.6.0-rc.1 | Runtime, TUI, four core tools, sessions, Usage Ledger, ARI |
-| Agulater | 0.2.1-rc.1 | Optional runtime/extension lifecycle and Package preparation |
+| Agulater | 0.2.1-rc.2 | Optional runtime/extension lifecycle and Package preparation |
 | AgentKube | 0.2.3-rc.1 | Optional Skills, Plugins, specialist Packages, and source starters |
 
 Coordinator and Self Maintainer source manifests are `0.3.2-rc.1`. The Catalog
