@@ -59,10 +59,10 @@ if (-not $LocalUri.IsAbsoluteUri -or
 
 ## 2. 生成本地三仓候选包
 
-脚本会编译 Agul、生成本机发布压缩包、把 Agulater 编译为独立程序、打包
-可选 npm artifact、写本地 Runtime 索引，并记录版本、commit、dirty 状态和
-SHA-256。Bun 只在这一构建步骤运行；两个面向用户的程序都没有外部 Bun
-依赖。脚本不会发布任何内容。
+脚本会编译 Agul、生成本机发布压缩包、把 Agulater 编译为独立程序及本机
+Release 压缩包、打包可选 npm artifact、写本地 Runtime 索引，并记录版本、
+commit、dirty 状态和 SHA-256。Bun 只在这一构建步骤运行；两个面向用户的
+程序都没有外部 Bun 依赖。脚本不会发布任何内容。
 
 ```powershell
 python docs/acceptance/build_candidate.py
@@ -74,11 +74,14 @@ $Candidate | ConvertTo-Json -Depth 8
 
 - [ ] 版本为 Agul `0.6.0-rc.1`、Agulater `0.2.1-rc.1`、AgentKube
   `0.2.3-rc.1`。
-- [ ] 清单记录三个精确 commit，以及 Agul、Agulater standalone、可选 npm
-  包三个 artifact hash。
+- [ ] 清单记录三个精确 commit，以及 Agul archive、Agulater standalone、
+  Agulater release archive、可选 npm 包四个 artifact hash。
 - [ ] 最终验收时三项 `dirty` 都是 `false`。
-- [ ] Agul ZIP 内有 `agul.exe`、`LICENSE`、`README.md`、
-  `CONTRIBUTING.md`、`docs/`、`schemas/` 和当前 GIF。
+- [ ] Agul ZIP 内有 `agul.exe`、`LICENSE`、`THIRD_PARTY_NOTICES.md`、
+  `Cargo.lock`、`README.md`、`CONTRIBUTING.md`、`docs/`、`schemas/`
+  和当前 GIF。
+- [ ] Agulater release archive 以版本化目录为顶层，内有 standalone、
+  `LICENSE` 和 `THIRD_PARTY_NOTICES`。
 
 开发中可以测试 dirty bundle，但不能批准它发布。
 
@@ -95,37 +98,103 @@ $Agul = (Get-ChildItem $Standalone -Recurse -Filter agul.exe |
 ```
 
 - [ ] 不安装 Bun、Node.js 或 Agulater 也能运行 `agul.exe`。
-- [ ] 解压目录同时包含 `LICENSE`、`README.md`、`CONTRIBUTING.md`、
-  `docs/`、`schemas/` 和当前 GIF。
+- [ ] 解压目录同时包含 `LICENSE`、`THIRD_PARTY_NOTICES.md`、`Cargo.lock`、
+  `README.md`、`CONTRIBUTING.md`、`docs/`、`schemas/` 和当前 GIF。
 
 ## 4. 验证无 Bun 的 Agulater 生命周期
 
 下面隔离用户 home 和 Agul prefix，并临时从 `PATH` 移除 Bun、Node.js、npm
-和机器里可能已有的 Agulater。所有 Agulater 命令都直接运行候选 standalone：
+和机器里可能已有的 Agulater。它用本地 `gh` 替身让正式安装脚本消费候选
+release archive；不访问 GitHub，也不绕过 archive 布局直接运行裸程序。
 
 ```powershell
 $CleanRoot = Join-Path $CandidateRoot ("clean-user-" + [guid]::NewGuid().ToString("N"))
-$env:HOME = Join-Path $CleanRoot "home"
-$env:USERPROFILE = $env:HOME
-New-Item -ItemType Directory -Force $env:HOME | Out-Null
-$Agulater = $Candidate.artifacts.agulater.path
+$CleanHome = Join-Path $CleanRoot "home"
+$InstallDir = Join-Path $CleanRoot "agulater-bin"
+$AgulPrefix = Join-Path $CleanRoot "agul"
+New-Item -ItemType Directory -Force $CleanHome | Out-Null
 $OriginalPath = $env:Path
+$OriginalHome = $env:HOME
+$OriginalUserProfile = $env:USERPROFILE
+$OriginalAcceptanceArchive = $env:AGULATER_ACCEPTANCE_ARCHIVE
+$env:AGULATER_ACCEPTANCE_ARCHIVE = $Candidate.artifacts.agulater_release.path
+
+if (-not $IsWindows) {
+  $Shell = (Get-Command sh -ErrorAction Stop).Source
+  $ToolBin = Join-Path $CleanRoot "system-tools"
+  New-Item -ItemType Directory -Force $ToolBin | Out-Null
+  foreach ($Name in @("uname", "tar", "gzip", "mktemp", "mkdir", "cp", "chmod", "rm")) {
+    $Source = (Get-Command $Name -ErrorAction Stop).Source
+    New-Item -ItemType SymbolicLink -Path (Join-Path $ToolBin $Name) `
+      -Target $Source | Out-Null
+  }
+}
 
 try {
-  $env:Path = "$env:SystemRoot\System32;$env:SystemRoot"
+  $env:HOME = $CleanHome
+  $env:USERPROFILE = $CleanHome
+  $env:Path = if ($IsWindows) {
+    "$env:SystemRoot\System32;$env:SystemRoot"
+  } else {
+    $ToolBin
+  }
   if (Get-Command bun,node,npm,agulater -ErrorAction SilentlyContinue) {
     throw "language runtime or global Agulater leaked into standalone smoke"
   }
+
+  if ($IsWindows) {
+    function global:gh {
+      if ($args[0] -eq "auth" -and $args[1] -eq "status") {
+        $global:LASTEXITCODE = 0
+        return
+      }
+      $DirIndex = [Array]::IndexOf($args, "--dir")
+      if ($DirIndex -lt 0 -or $DirIndex + 1 -ge $args.Count) {
+        $global:LASTEXITCODE = 2
+        return
+      }
+      Copy-Item -LiteralPath $env:AGULATER_ACCEPTANCE_ARCHIVE `
+        -Destination $args[$DirIndex + 1]
+      $global:LASTEXITCODE = 0
+    }
+    & (Resolve-Path "agulater/scripts/install.ps1") `
+      -Version $Candidate.versions.agulater `
+      -InstallDir $InstallDir `
+      -SetupHome $CleanHome `
+      -NoModifyPath
+    $Agulater = Join-Path $InstallDir "agulater.exe"
+  } else {
+    $Installer = (Resolve-Path "agulater/scripts/install.sh").Path
+    $InstallCommand = @'
+gh() {
+  if [ "$1 $2" = "auth status" ]; then return 0; fi
+  destination=
+  while [ "$#" -gt 0 ]; do
+    if [ "$1" = "--dir" ]; then shift; destination=$1; fi
+    shift
+  done
+  cp "$AGULATER_ACCEPTANCE_ARCHIVE" "$destination/"
+}
+. "$1" --version "$2" --install-dir "$3" --home "$4"
+'@
+    & $Shell -c $InstallCommand acceptance `
+      $Installer $Candidate.versions.agulater $InstallDir $CleanHome
+    $Agulater = Join-Path $InstallDir "agulater"
+  }
+  if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $Agulater)) {
+    throw "Agulater release archive installation failed"
+  }
+
   & $Agulater --version
-  & $Agulater setup user --if-missing --home $env:HOME
+  & $Agulater setup user --if-missing --home $CleanHome
 
   $Install = & $Agulater runtime install `
     --channel next `
     --url $Candidate.artifacts.runtime_index `
-    --prefix (Join-Path $CleanRoot "agul") `
+    --prefix $AgulPrefix `
     --json | ConvertFrom-Json
 
-  & $Agulater runtime status --prefix (Join-Path $CleanRoot "agul") --json
+  & $Agulater runtime status --prefix $AgulPrefix --json
   & $Install.shim --version
   $Agul = $Install.shim
   $env:AGUL_SUBAGENT_BINARY = $Install.executable
@@ -133,16 +202,24 @@ try {
   & $Agulater runtime update `
     --channel next `
     --url $Candidate.artifacts.runtime_index `
-    --prefix (Join-Path $CleanRoot "agul") `
+    --prefix $AgulPrefix `
     --json
 } finally {
   $env:Path = $OriginalPath
+  $env:HOME = $OriginalHome
+  $env:USERPROFILE = $OriginalUserProfile
+  $env:AGULATER_ACCEPTANCE_ARCHIVE = $OriginalAcceptanceArchive
+  if ($IsWindows) {
+    Remove-Item Function:\global:gh -ErrorAction SilentlyContinue
+  }
 }
 ```
 
 - [ ] Bun、Node.js、npm 和全局 Agulater 均不在这段测试的命令路径中。
+- [ ] 正式 installer 从候选 `agulater_release` archive 安装，而不是直接运行
+  `artifacts.agulater` 裸程序。
 - [ ] standalone `agulater --version` 是候选版。
-- [ ] `setup user --if-missing` 创建 `$env:HOME/.agents` 并注册 AgentKube Catalog，但没有
+- [ ] `setup user --if-missing` 创建 `$CleanHome/.agents` 并注册 AgentKube Catalog，但没有
   擅自下载扩展。
 - [ ] `runtime status` 为 `installed: true` 且版本准确。
 - [ ] 当前终端直接运行返回的 `shim` 成功。

@@ -8,9 +8,13 @@ import hashlib
 import json
 from pathlib import Path
 import platform
+import shutil
 import subprocess
 import sys
+import tarfile
+import tempfile
 import tomllib
+import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -86,6 +90,46 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def package_agulater_release(
+    *,
+    binary: Path,
+    platform_name: str,
+    version: str,
+    archive_format: str,
+    output: Path,
+    repository_root: Path = AGULATER,
+) -> Path:
+    binary = binary.resolve(strict=True)
+    version = version.removeprefix("v")
+    bundle_name = f"agulater-v{version}-{platform_name}"
+    executable = "agulater.exe" if platform_name == "windows-x64" else "agulater"
+    suffix = ".zip" if archive_format == "zip" else ".tar.gz"
+    destination = output / f"{bundle_name}{suffix}"
+
+    output.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="agulater-release-") as temporary:
+        bundle = Path(temporary) / bundle_name
+        bundle.mkdir()
+        packaged_binary = bundle / executable
+        shutil.copy2(binary, packaged_binary)
+        if executable == "agulater":
+            packaged_binary.chmod(packaged_binary.stat().st_mode | 0o111)
+        for name in ("LICENSE", "THIRD_PARTY_NOTICES"):
+            shutil.copy2(repository_root / name, bundle / name)
+
+        if archive_format == "zip":
+            with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED) as archive:
+                for path in sorted(bundle.rglob("*")):
+                    if path.is_file():
+                        archive.write(path, path.relative_to(bundle.parent).as_posix())
+        elif archive_format == "tar.gz":
+            with tarfile.open(destination, "w:gz") as archive:
+                archive.add(bundle, arcname=bundle_name)
+        else:
+            raise ValueError(f"unsupported archive format: {archive_format}")
+    return destination
 
 
 def main() -> None:
@@ -169,9 +213,17 @@ def main() -> None:
     if version_check != f"agulater {agulater_version}":
         raise SystemExit(f"unexpected Agulater standalone version: {version_check}")
 
+    agulater_release = package_agulater_release(
+        binary=agulater_binary,
+        platform_name=runtime_platform,
+        version=agulater_version,
+        archive_format=archive_format,
+        output=output,
+    )
+
     # Bun 1.4 rejects combining --destination and --filename. Its default npm
     # tarball name is stable and already includes the package version.
-    agulater_archive = output / f"agulater-{agulater_version}.tgz"
+    agulater_npm_archive = output / f"agulater-{agulater_version}.tgz"
     run(
         "bun",
         "pm",
@@ -181,8 +233,8 @@ def main() -> None:
         "--ignore-scripts",
         cwd=AGULATER,
     )
-    if not agulater_archive.is_file():
-        raise SystemExit(f"missing Agulater archive: {agulater_archive}")
+    if not agulater_npm_archive.is_file():
+        raise SystemExit(f"missing Agulater npm archive: {agulater_npm_archive}")
 
     runtime_index = output / "releases.json"
     runtime_index.write_text(
@@ -229,9 +281,13 @@ def main() -> None:
                 "path": str(agulater_binary),
                 "sha256": sha256(agulater_binary),
             },
+            "agulater_release": {
+                "path": str(agulater_release),
+                "sha256": sha256(agulater_release),
+            },
             "agulater_npm": {
-                "path": str(agulater_archive),
-                "sha256": sha256(agulater_archive),
+                "path": str(agulater_npm_archive),
+                "sha256": sha256(agulater_npm_archive),
             },
             "runtime_index": str(runtime_index),
         },

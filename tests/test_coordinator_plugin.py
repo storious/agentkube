@@ -27,6 +27,15 @@ import time
 
 root = Path.cwd()
 session_id = f"session-{os.getpid()}"
+(root / f"worker-{os.getpid()}.json").write_text(
+    json.dumps(
+        {
+            "argv": sys.argv[1:],
+            "state_dir": os.environ.get("AGUL_STATE_DIR"),
+        }
+    ),
+    encoding="utf-8",
+)
 
 
 def emit(value):
@@ -325,9 +334,13 @@ def _invoke(
     tasks: list[dict[str, object]] | None = None,
     *,
     command: str | None = None,
+    state_dir: Path | None = None,
 ):
     (workspace / "ari").write_text(textwrap.dedent(FAKE_AGUL), encoding="utf-8")
     environment = os.environ.copy()
+    environment.pop("AGUL_STATE_DIR", None)
+    if state_dir is not None:
+        environment["AGUL_STATE_DIR"] = str(state_dir)
     environment["AGUL_SUBAGENT_BINARY"] = sys.executable
     request = {
         **(
@@ -451,6 +464,31 @@ class CoordinatorPluginTests(unittest.TestCase):
                     "specialist_id": "repository-scout",
                     "pool_id": "local",
                 },
+            )
+            worker = json.loads(
+                next(workspace.glob("worker-*.json")).read_text(encoding="utf-8")
+            )
+            self.assertEqual(worker, {"argv": ["serve"], "state_dir": None})
+
+    def test_inherits_explicit_agul_state_directory_into_worker(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory).resolve()
+            launch = _write_runtime(workspace)
+            state_dir = workspace / "custom-state"
+            completed = _invoke(
+                workspace,
+                launch,
+                command="repository-scout solo|single|completed",
+                state_dir=state_dir,
+            )
+
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            worker = json.loads(
+                next(workspace.glob("worker-*.json")).read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                worker,
+                {"argv": ["serve"], "state_dir": str(state_dir)},
             )
 
     def test_forwards_only_compact_child_tool_progress(self) -> None:
