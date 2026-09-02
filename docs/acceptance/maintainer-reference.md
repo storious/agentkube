@@ -1,7 +1,8 @@
 # Maintainer acceptance supplement
 
-Use this supplement after completing the shorter
-[release-owner checklist](README.md). It adds repeatable diagnostics without
+Maintainers use this supplement alongside the
+[preparation runbook](maintainer-runbook.md), not as homework for the owner.
+The owner uses the [prepared experience menu](README.md). This adds diagnostics without
 turning local account, model, or session data into repository documentation.
 
 ## Keep evidence local

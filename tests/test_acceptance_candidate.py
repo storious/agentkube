@@ -63,8 +63,8 @@ class AcceptanceCandidateTests(unittest.TestCase):
                         }
                 self.assertEqual(actual, expected)
 
-    def test_owner_checklist_consumes_archive_and_checks_notices(self) -> None:
-        checklist = (ROOT / "docs" / "acceptance" / "README.md").read_text(
+    def test_maintainer_runbook_consumes_archive_and_checks_notices(self) -> None:
+        checklist = (ROOT / "docs" / "acceptance" / "maintainer-runbook.md").read_text(
             encoding="utf-8"
         )
 

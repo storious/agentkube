@@ -19,7 +19,7 @@ use the stable commands below to test an unpublished release candidate.
 
 | State | Direct Agul route | Optional Agulater route |
 | --- | --- | --- |
-| Current unpublished candidate | Extract the local Agul archive produced by the owner checklist | Run the local standalone Agulater candidate, then install the local Agul runtime index |
+| Current unpublished candidate | Maintainer prepares the local Agul archive; owner opens the experience menu | Maintainer installs the candidate through standalone Agulater and prepares the menu scenes |
 | Published prerelease | Download the tagged platform archive or tagged installer | Download the tagged standalone Agulater asset or attached installer, then `runtime install --channel next` |
 | Published stable | Run the release `install.sh`/`install.ps1` or download a platform archive | Run Agulater's `install.sh`/`install.ps1`, then `runtime install --channel stable` |
 
@@ -43,12 +43,13 @@ acceptance; an already-present account status is not enough to pass the gate.
 
 ## Publication gate
 
-The owner checklist is [acceptance/README.md](acceptance/README.md). It builds a
-local Agul archive and standalone Agulater executable, runs both without a
-runtime dependency, then exercises the real TUI, GLM Coding Plan, ChatGPT Web
-Search, session recovery, and local plus DeepSeek workers. It also packs the
-optional npm artifact for maintainers. No public artifact is needed to pass
-that pre-publication gate.
+The owner opens the [experience menu](acceptance/README.md), selects a scene,
+and judges the real TUI, GLM Coding Plan, ChatGPT Web Search, session recovery,
+and local plus DeepSeek workers. The environment and sessions are reused.
+Building, installing, checking archives and the optional npm artifact belong
+to the [maintainer runbook](acceptance/maintainer-runbook.md), not the owner.
+No public artifact is needed for this local pre-publication experience; it
+does not substitute for testing the public download path after publication.
 
 Only after explicit owner approval:
 

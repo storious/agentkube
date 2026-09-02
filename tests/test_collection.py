@@ -356,7 +356,7 @@ class CollectionTests(unittest.TestCase):
         self.assertNotIn("reasoning_effort", account_pool)
 
     def test_manual_acceptance_generates_local_pool_from_environment(self) -> None:
-        checklist = (ROOT / "docs" / "acceptance" / "README.md").read_text(
+        checklist = (ROOT / "docs" / "acceptance" / "maintainer-runbook.md").read_text(
             encoding="utf-8"
         )
 

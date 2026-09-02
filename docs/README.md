@@ -14,8 +14,8 @@
   delegation and Plugin v2 events.
 - [ARI example](../examples/README.md) runs an AgentKube Skill through an
   Agulater-prepared Agul session.
-- [Three-repository hands-on acceptance](acceptance/README.md) exercises real
-  DeepSeek, GLM Coding Plan, ChatGPT, local and delegated-model paths as one
-  checklist.
+- [Hands-on experience menu](acceptance/README.md) opens prepared DeepSeek,
+  GLM Coding Plan, ChatGPT, Web, and delegated-model scenes without rebuilding
+  the environment. Candidate setup belongs to the maintainer runbook.
 - [Validation](validation/README.md) defines the small, non-sensitive public
   evidence kept after a release-owner run.
