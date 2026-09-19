@@ -110,7 +110,7 @@ def prepare(candidate_path: Path, home: Path) -> None:
             "runtime",
             "install",
             "--channel",
-            "next",
+            "next" if "-" in candidate["versions"]["agul"] else "stable",
             "--url",
             candidate["artifacts"]["runtime_index"],
             "--prefix",
