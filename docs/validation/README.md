@@ -1,5 +1,8 @@
 # Validation
 
+Current interim status: [2026-09-19 pre-release validation](2026-09-19.md).
+This records automated checks and remaining gates, not a completed release.
+
 The executable release gate is the
 [three-repository acceptance checklist](../acceptance/README.md). Historical
 model runs never substitute for a fresh candidate run.
