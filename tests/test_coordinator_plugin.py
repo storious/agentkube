@@ -399,7 +399,7 @@ class CoordinatorPluginTests(unittest.TestCase):
 
         self.assertEqual(manifest["format"], "agul/plugin/v2")
         self.assertEqual(manifest["name"], "coordinator")
-        self.assertEqual(manifest["version"], "0.3.2-rc.1")
+        self.assertEqual(manifest["version"], "0.3.2")
         self.assertEqual(manifest["timeout_seconds"], 6300)
         self.assertEqual(
             manifest["commands"],

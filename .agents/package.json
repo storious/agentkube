@@ -1,7 +1,7 @@
 {
   "format": "agulater/package/v2",
   "id": "agentkube",
-  "version": "0.2.3-rc.1",
+  "version": "0.2.3",
   "description": "Optional specialists, skills, plugins, starters, and catalog entries for Agul.",
   "instructions": "AGENTS.md",
   "resources": {

@@ -2,7 +2,7 @@
   "format": "agulater/snapshot/v1",
   "package": {
     "id": "self-maintainer",
-    "version": "0.3.2-rc.1"
+    "version": "0.3.2"
   },
   "instructions": {
     "source": "AGENTS.md",
@@ -13,7 +13,7 @@
     "plugins": [
       {
         "id": "coordinator",
-        "version": "0.3.2-rc.1",
+        "version": "0.3.2",
         "source": {
           "type": "resource",
           "path": "../../../plugins/coordinator"

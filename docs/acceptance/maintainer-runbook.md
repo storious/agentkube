@@ -80,8 +80,8 @@ $Candidate = Get-Content (Join-Path $CandidateRoot "candidate.json") -Raw |
 $Candidate | ConvertTo-Json -Depth 8
 ```
 
-- [ ] 版本为 Agul `0.6.0-rc.1`、Agulater `0.2.1-rc.2`、AgentKube
-  `0.2.3-rc.1`。
+- [ ] 版本为 Agul `0.6.0`、Agulater `0.2.1`、AgentKube
+  `0.2.3`。
 - [ ] 清单记录三个精确 commit，以及 Agul archive、Agulater standalone、
   Agulater release archive、可选 npm 包四个 artifact hash。
 - [ ] 最终验收时三项 `dirty` 都是 `false`。

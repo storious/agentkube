@@ -1,7 +1,7 @@
 {
   "format": "agulater/package/v2",
   "id": "self-maintainer",
-  "version": "0.3.2-rc.1",
+  "version": "0.3.2",
   "description": "A small master setup with native or ChatGPT-backed specialists and live web research.",
   "instructions": "AGENTS.md",
   "resources": {

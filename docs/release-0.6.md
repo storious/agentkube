@@ -2,15 +2,19 @@
 
 This batch is deliberately split across three independently versioned projects:
 
-| Project | Candidate | Role |
+| Project | Release | Role |
 | --- | --- | --- |
-| Agul | 0.6.0-rc.1 | Runtime, TUI, four core tools, sessions, Usage Ledger, ARI |
-| Agulater | 0.2.1-rc.2 | Optional runtime/extension lifecycle and Package preparation |
-| AgentKube | 0.2.3-rc.1 | Optional Skills, Plugins, specialist Packages, and source starters |
+| Agul | 0.6.0 | Runtime, TUI, four core tools, sessions, Usage Ledger, ARI |
+| Agulater | 0.2.1 | Optional runtime/extension lifecycle and Package preparation |
+| AgentKube | 0.2.3 | Optional Skills, Plugins, specialist Packages, and source starters |
 
-Coordinator and Self Maintainer source manifests are `0.3.2-rc.1`. The Catalog
-publishes this Coordinator preview from its matching immutable tag; the root
+Coordinator and Self Maintainer source manifests are `0.3.2`. The Catalog
+publishes this Coordinator release from its matching immutable tag; the root
 Self Maintainer remains a source starter rather than a nested Catalog package.
+
+The owner confirmed the TUI, session recovery, ChatGPT login/Web, and worker
+experience on 2026-09-19 and explicitly waived the live GLM check. Automated
+validation is recorded in [the validation note](validation/2026-09-19.md).
 
 ## Supported user paths
 

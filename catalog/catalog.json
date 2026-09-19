@@ -103,12 +103,12 @@
       "description": "Delegate bounded work to prepared Agul specialists through native or Codex execution pools.",
       "versions": [
         {
-          "version": "0.3.2-rc.1",
+          "version": "0.3.2",
           "source": {
             "type": "git",
             "url": "https://github.com/storious/agentkube.git",
             "subdir": "plugins/coordinator",
-            "ref": "coordinator-v0.3.2-rc.1"
+            "ref": "coordinator-v0.3.2"
           }
         }
       ]

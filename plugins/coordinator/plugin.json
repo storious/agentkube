@@ -1,7 +1,7 @@
 {
   "format": "agul/plugin/v2",
   "name": "coordinator",
-  "version": "0.3.2-rc.1",
+  "version": "0.3.2",
   "timeout_seconds": 6300,
   "command": [
     "python",

@@ -28,7 +28,7 @@ class CollectionTests(unittest.TestCase):
         )
         self.assertEqual(package["format"], "agulater/package/v2")
         self.assertEqual(package["id"], "agentkube")
-        self.assertEqual(package["version"], "0.2.3-rc.1")
+        self.assertEqual(package["version"], "0.2.3")
         self.assertTrue((PACKAGE.parent / package["instructions"]).is_file())
         resources = package["resources"]
         self.assertEqual(
@@ -165,7 +165,7 @@ class CollectionTests(unittest.TestCase):
         self.assertNotIn("agentkube", {entry["id"] for entry in entries})
         catalog_by_id = {entry["id"]: entry for entry in entries}
         expected_versions = {
-            "coordinator": ["0.3.2-rc.1"],
+            "coordinator": ["0.3.2"],
             "repository-scout": ["0.1.1"],
             "docs-editor": ["0.1.1"],
             "short-patcher": ["0.1.1"],

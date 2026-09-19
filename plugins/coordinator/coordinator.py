@@ -18,7 +18,7 @@ from uuid import uuid4
 MAX_TASKS = 5
 MAX_CHILD_PROGRESS_EVENTS = 32
 STDERR_TAIL_CHARS = 2_000
-COORDINATOR_VERSION = "0.3.2-rc.1"
+COORDINATOR_VERSION = "0.3.2"
 HANDOFF_FORMAT = "agul/handoff/v1"
 SPECIALISTS_FORMAT = "agulater/specialists/v1"
 POOLS_FORMAT = "agulater/pools/v2"
