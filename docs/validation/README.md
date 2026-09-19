@@ -1,7 +1,7 @@
 # Validation
 
-Current interim status: [2026-09-19 pre-release validation](2026-09-19.md).
-This records automated checks and remaining gates, not a completed release.
+Latest release: [2026-09-19 validation](2026-09-19.md), including automated
+checks, owner acceptance, the explicit GLM waiver, and public release evidence.
 
 The executable release gate is the
 [three-repository acceptance checklist](../acceptance/README.md). Historical
